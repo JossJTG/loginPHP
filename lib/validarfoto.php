@@ -17,12 +17,15 @@ function validarFoto ($nombre){
     $rutaSubida = "{$dirSubida}profile.jpg"; 
     $extArchivo = preg_replace('/image\//','',$foto['type']); //Verifica si el archivo es jpeg o png
 
+    
     //Lo guardado arriba tiene que ser jpeg o png, para mover y actualizar el archivo
-    if($extArchivo == 'jpeg' || $extArchivo == 'png'){
-        if(!file_exists($dirSubida)){
-            mkdir("$dirSubida", 0777);
-        }
 
+    if($extArchivo == 'jpeg' || $extArchivo == 'png'){ //verifica si la extensión del archivo es "jpeg" o "png"
+        if(!file_exists($dirSubida)){ 
+            mkdir("$dirSubida", 0777); 
+        }
+        
+        //para mover el archivo cargado temporalmente a la ruta de destino
         if(move_uploaded_file($nombreTmp, $rutaSubida)){
             //echo "<img class='img-responsive' src='$rutaSubida' alt=''>";
             return true;
@@ -30,6 +33,7 @@ function validarFoto ($nombre){
             return false;
         }
     }else{
+        //Genera una advertencia que indica que el archivo no es una imagen válida
         trigger_error("No es un archivo de imagen valido",
         E_USER_WARNING);
         exit;
