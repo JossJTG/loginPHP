@@ -1,9 +1,10 @@
 <?php
     require 'inc/cabecera.inc';
-?>
-
-    
-    <div class="container-fluid">
+?> 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-centrar">
+<!-- <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h3>Portal Web</h3>
@@ -12,7 +13,7 @@
             </div>
         </div>
         
-        <div class="col-md-12 caja col-centrar">
+        <div class="col-md-12 caja col-centrar"> -->
                 <?php
                     //Para poder llamar a la db
                     require_once 'lib/config.php';
@@ -41,10 +42,10 @@
                                         if($validarEmail == 0){
                                             if(validarFoto($nombre)){
                                                 //echo "<img class='img-responsive' src='$rutaSubida' alt=''>";
-                                                exit();
-                                                if($db->preparar("INSERT INTO usuarios VALUES(NULL, '$nombre', '$apellido', '$email', '$contrasena', $dni, $celular, '$direccion', $edad, '$ciudad', '$departamento', $codigopostal)"));
+                                                
+                                                if($db->preparar("INSERT INTO usuarios VALUES(NULL, '$nombre', '$apellido', '$email', '$contrasena', '$dni', '$celular', '$direccion', '$edad', '$ciudad', '$departamento', '$codigopostal')"));
                                                 $db->ejecutar();
-                                                trigger_error("Te has registrado correctamente", E_USER_ERROR);
+                                                trigger_error("Te has registrado correctamente", E_USER_NOTICE);
                                                 $ok = true;
                                         }   else{
                                             echo $error;
@@ -166,6 +167,18 @@
 
                     //echo $db->validarDatos('apellido', 'usuarios', 'toribio');
                 ?>
+                
+        </div>
+    </div>
+</div>
+
+                <?php if($ok): ?>
+                <h2>Saludos</h2><?php echo $nombre ?></h2>
+                <img class="img-responsive" src="<?php echo $rutaSubida?>" alt="">
+                <p>
+                    Te has registrado perfectamente, por favor hacer click en el boton para ir a la pagina de inicio
+                </p>
+                <?php else: ?>
 
                 <form action="" enctype="multipart/form-data" method="POST">
                     <legend>Registrate</legend>
@@ -255,7 +268,7 @@
                     <a class=pull-right
                     href="index.php">Click aqui si ya tienes una cuenta</a>
                 </form>
-                
+            <?php endif; ?>
                 
         </div>
         </div>

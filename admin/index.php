@@ -1,7 +1,25 @@
 <?php
     require 'inc/cabecera.inc';
 ?>
- 
+<?
+if($_POST){
+    extract($_POST, EXTR_OVERWRITE);
+    
+    $nombre = strtolower($nombre);
+
+    $db = new Database(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    $validarEmail = $db->validarDatos('email', 'usuarios', $email);
+    $validarContrasena = $db->validarDatos('contrasena', 'usuarios', $contrasena);
+
+    if(preg_match($expreg, $email)){
+        if($validarEmail == 0){
+            
+        }
+    }
+}
+?>
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -14,14 +32,12 @@
                 <form action="admin" method="POST">
                     <legend>Logueate</legend>
                     <div class="form-group">
-                        <input name="email"
-                        type="text"
+                        <input type="text"
                         class="form-control" id=""
                         placeholder="Usuario">
                     </div>
                     <div class="form-group">
-                        <input name="contrasena"
-                        type="password"
+                        <input type="password"
                         class="form-control" id=""
                         placeholder="Su contraseña...">
 
