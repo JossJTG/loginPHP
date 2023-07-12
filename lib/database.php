@@ -31,6 +31,8 @@ class Database{
         if(!$this->prep){
             trigger_error("Error al preparar la consulta",
             E_USER_ERROR);
+        }else{
+            return true;
         }
     }
 

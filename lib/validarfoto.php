@@ -2,14 +2,15 @@
 function validarFoto ($nombre){
     global $dirSubida;
     global $rutaSubida;
+    global $error;
     
     $dirSubida = "fotos/$nombre/"; //La foto será subida a la carpeta 
 
     //Crea para subir la direccion de la foto
-    if(!file_exists($dirSubida)){
+    /* if(!file_exists($dirSubida)){
         mkdir($dirSubida, 0777);
     }
-
+ */
     $foto = $_FILES['foto']; //Extrae los datos del archivo foto
     //var_dump($foto);
     $nombreFoto = $foto['name']; //Almacena nombre de la foto
@@ -30,14 +31,14 @@ function validarFoto ($nombre){
             //echo "<img class='img-responsive' src='$rutaSubida' alt=''>";
             return true;
         }else{
-            return false;
+            trigger_error("No se pudo mover el archivo, intente de nuevo", E_USER_ERROR);
+            /* $error = "No se pudo mover el archivo"; */
         }
     }else{
-        //Genera una advertencia que indica que el archivo no es una imagen válida
-        trigger_error("No es un archivo de imagen valido",
-        E_USER_WARNING);
-        exit;
+        trigger_error("No es un archivo de imagen valido", E_USER_ERROR);
+        /* $error =  "No es un archivo de imagen valido"; */
     }
+    return $error;
 }
 
 ?>

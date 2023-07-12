@@ -28,15 +28,86 @@
                             mkdir("fotos", 0777);
                         }
                         $nombre = strtolower($nombre);
-                        if(validarFoto($nombre)){
-                            echo "<img class='img-responsive'
-                            src='$rutaSubida' alt=''>";
-                        } //El nombre de la foto lo convierte en minúscula
-                        
+
+                        $db = new Database(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if($nombre && $email && $contrasena && $confircontrasena){
+                            $expreg = '/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/';
+
+                            if(preg_match($expreg, $email)){
+                                if(strlen($contrasena)>6){
+                                    if($contrasena == $confircontrasena){
+                                        $validarEmail = $db->validarDatos('email', 'usuarios', $email);
+                                        if($validarEmail == 0){
+                                            if(validarFoto($nombre)){
+                                                //echo "<img class='img-responsive' src='$rutaSubida' alt=''>";
+                                                exit();
+                                                if($db->preparar("INSERT INTO usuarios VALUES(NULL, '$nombre', '$apellido', '$email', '$contrasena', $dni, $celular, '$direccion', $edad, '$ciudad', '$departamento', $codigopostal)"));
+                                                $db->ejecutar();
+                                                trigger_error("Te has registrado correctamente", E_USER_ERROR);
+                                                $ok = true;
+                                        }   else{
+                                            echo $error;
+                                        }
+                                    }else{
+                                        trigger_error("este email ya esta registrado, por favor pruebe otro.", E_USER_ERROR);
+
+                                        /* echo 
+                                        "<div class='alerta alerta_error'>
+                                            <div class='alerta_icon'>
+                                                <i class='glyphicon glyphicon-exclamation-sign'></i>
+                                            </div>
+                                            <div class='alerta_wrapper'> Error: este email ya esta registrado, por favor pruebe otro.
+                                            </div> <a href='#' class='colse err'><i class='glyphicon remove'></i></a>
+                                                </div>
+                                        ";    */                                     
+                                    }
+                                }else{
+                                    trigger_error("Error: Las contraseñas no coinciden", E_USER_ERROR);
+
+                                    /* echo 
+                                    "<div class='alerta alerta_error'>
+                                        <div class='alerta_icon'>
+                                            <i class='glyphicon glyphicon-exclamation-sign'></i>
+                                        </div>
+                                        <div class='alerta_wrapper'> Error: Las contraseñas no coinciden
+                                        </div> <a href='#' class='colse err'><i class='glyphicon remove'></i></a>
+                                            </div>
+                                    ";  */                                       
+                                }
+                            }else{
+                                trigger_error("La contraseña tiene que ser mayor a 6 caracteres", E_USER_ERROR);
+
+                                /* echo 
+                                "<div class='alerta alerta_error'>
+                                    <div class='alerta_icon'>
+                                        <i class='glyphicon glyphicon-exclamation-sign'></i>
+                                    </div>
+                                    <div class='alerta_wrapper'> Error: La contraseña tiene que ser mayor a 6 caracteres
+                                    </div> <a href='#' class='colse err'><i class='glyphicon remove'></i></a>
+                                        </div>
+                                ";   */                                      
+                            }
+                        }else{
+                            trigger_error("email erroneo, por favor ingresa un email valido.", E_USER_ERROR);
+
+                            /* echo 
+                            "<div class='alerta alerta_error'>
+                                <div class='alerta_icon'>
+                                    <i class='glyphicon glyphicon-exclamation-sign'></i>
+                                </div>
+                                <div class='alerta_wrapper'> Error: email erroneo, por favor ingresa un email valido.
+                                </div> <a href='#' class='colse err'><i class='glyphicon remove'></i></a>
+                                    </div>
+                            "; */                                        
+                        }                        
+                    }else {
+                        echo "depurando";
                     }
+                }
                     
                     //Conexion a la base de datos
-                    $db = new Database(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                    
                     /*$array = $db->getUsuarios();
                     
                     //------------Todo lo comentado es para probar
@@ -71,32 +142,32 @@
                     echo "</tbody>";
                     echo "</table>"; */
 
-                    $db->preparar("SELECT nombre, apellido, email FROM usuarios");
-                    $db->ejecutar();
-                    $db->prep()->bind_result(/* $id, */ $nombre, $apellido, $email/* , $a, $b, $c, $d, $e, $f, $g, $h */);
-                    echo "<table class ='table table-cell'>
-                            <thead>
-                                <tr>
-                                    "/* <td>nombre</td>
-                                    <td>apellido</td>
-                                    <td>email</td> */,"
-                                </tr>
-                            </thead>
-                        <tbody>";
-                    while($db->resultado()){ //Imprime los datos con diferentes va
-                        echo "<tr>
-                                <td>$nombre</td>
-                                <td>$apellido</td>
-                                <td>$email</td>                         
-                            </tr>";
-                    }
-                    echo "</tbody>";
-                    echo "</table>";
+                    //$db->preparar("SELECT nombre, apellido, email FROM usuarios");
+                    //$db->ejecutar();
+                    //$db->prep()->bind_result(/* $id, */ $nombre, $apellido, $email/* , $a, $b, $c, $d, $e, $f, $g, $h */);
+                    //echo "<table class ='table table-cell'>
+                      //      <thead>
+                        //        <tr>
+                          //          "/* <td>nombre</td>
+                            //        <td>apellido</td>
+                              //      <td>email</td> */,"
+                                //</tr>
+                            //</thead>
+                       // <tbody>";
+                    //while($db->resultado()){ //Imprime los datos con diferentes va
+                      //  echo "<tr>
+                        //        <td>$nombre</td>
+                          //      <td>$apellido</td>
+                            //    <td>$email</td>                         
+                           // </tr>";
+                    //}
+                    //echo "</tbody>";
+                    //echo "</table>";
 
-                    echo $db->validarDatos('apellido', 'usuarios', 'toribio');
+                    //echo $db->validarDatos('apellido', 'usuarios', 'toribio');
                 ?>
 
-                <!-- <form action="" enctype="multipart/form-data" method="POST">
+                <form action="" enctype="multipart/form-data" method="POST">
                     <legend>Registrate</legend>
                     
                     <div class="form-group">
@@ -109,11 +180,11 @@
                         <input name="apellido" type="text"
                         class="form-control" id=""
                         placeholder="Apellido">
-                    </div> -->
+                    </div>
 
 
                     <!-- /////////////AGREGAR EMAIL Y CONTRASEÑA/////////////// -->
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <input name="email" type="text"
                         class="form-control" id=""
                         placeholder="Email">
@@ -123,10 +194,16 @@
                         <input name="contrasena" type="password"
                         class="form-control" id=""
                         placeholder="Contraseña">
-                    </div> -->
+                    </div>
+
+                    <div class="form-group">
+                        <input name="confircontrasena" type="password"
+                        class="form-control" id=""
+                        placeholder="Confirmar Contraseña">
+                    </div>
                     <!-- //////////////////////////////// -->
                     
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <input name="dni" type="text"
                         class="form-control" id=""
                         placeholder="Dni">
@@ -177,7 +254,7 @@
                     <button type="submit" class="btn btn-success">Registrar</button>
                     <a class=pull-right
                     href="index.php">Click aqui si ya tienes una cuenta</a>
-                </form> -->
+                </form>
                 
                 
         </div>
