@@ -1,7 +1,9 @@
 <?php
-    require 'inc/cabecera.inc';
+    /* require 'inc/cabecera.inc'; */
 ?>
-<?
+
+<?php
+$ok = false;
 if($_POST){
     extract($_POST, EXTR_OVERWRITE);
     
@@ -20,7 +22,7 @@ if($_POST){
 }
 ?>
     
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h3>Portal Web</h3>
@@ -51,10 +53,10 @@ if($_POST){
         </div>
         </div>
         
-    </div>
+    </div> -->
     
     
 <?php
-    require 'inc/footer.inc';
+    /* require 'inc/footer.inc'; */
 ?>
 

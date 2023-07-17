@@ -1,7 +1,7 @@
 <?php
     require 'inc/cabecera.inc';
 ?>
- 
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="col-md-6 caja col-centrar">
-                <form action="admin" method="POST">
+                <form action="admin.php" method="POST">
                     <legend>Logueate</legend>
                     <div class="form-group">
                         <input name="email"

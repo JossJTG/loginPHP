@@ -1,5 +1,7 @@
 <?php
     require 'inc/cabecera.inc';
+    require 'lib/errores.php';
+    require 'lib/validarfoto.php';
 ?> 
 <div class="container-fluid">
     <div class="row">
@@ -30,9 +32,10 @@
                         }
                         $nombre = strtolower($nombre);
 
-                        $db = new Database(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                        
 
                         if($nombre && $email && $contrasena && $confircontrasena){
+                            $db = new Database(DB_HOST, DB_USER, DB_PASS, DB_NAME);
                             $expreg = '/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/';
 
                             if(preg_match($expreg, $email)){
@@ -43,7 +46,7 @@
                                             if(validarFoto($nombre)){
                                                 //echo "<img class='img-responsive' src='$rutaSubida' alt=''>";
                                                 
-                                                if($db->preparar("INSERT INTO usuarios VALUES(NULL, '$nombre', '$apellido', '$email', '$contrasena', '$dni', '$celular', '$direccion', '$edad', '$ciudad', '$departamento', '$codigopostal')"));
+                                                if($db->preparar("INSERT INTO usuarios VALUES(NULL, '$nombre', '$apellido', '$email', '$contrasena', '$dni', '$celular', '$direccion', '$edad', '$ciudad', '$departamento', '$codigopostal', '$rutaSubida')"));
                                                 $db->ejecutar();
                                                 trigger_error("Te has registrado correctamente", E_USER_NOTICE);
                                                 $ok = true;

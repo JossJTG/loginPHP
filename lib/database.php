@@ -56,5 +56,10 @@ class Database{
         return $chequear;
 
     }
+
+    public function cerrar(){
+        $this->prep->close();
+        $this->db->close();
+    }
 }
 ?>

@@ -1,6 +1,5 @@
 <?php
-require 'lib/errores.php';
-require 'lib/validarfoto.php';
+
 ?>
 
 <!DOCTYPE html>
