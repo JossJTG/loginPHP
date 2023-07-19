@@ -1,4 +1,8 @@
 <?php
+    session_start();
+    if(isset($_SESSION['nombre']) && isset($_SESSION['idUsuario'])){
+        header("Location: admin.php");
+    }
     require 'inc/cabecera.inc';
 ?>
 
@@ -11,7 +15,7 @@
             </div>
         </div>
         <div class="col-md-6 caja col-centrar">
-                <form action="admin.php" method="POST">
+                <form action="login.php" method="POST">
                     <legend>Logueate</legend>
                     <div class="form-group">
                         <input name="email"

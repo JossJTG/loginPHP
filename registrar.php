@@ -50,6 +50,7 @@
                                                 $db->ejecutar();
                                                 trigger_error("Te has registrado correctamente", E_USER_NOTICE);
                                                 $ok = true;
+                                                $db-> cerrar();
                                         }   else{
                                             echo $error;
                                         }
@@ -181,6 +182,7 @@
                 <p>
                     Te has registrado perfectamente, por favor hacer click en el boton para ir a la pagina de inicio
                 </p>
+                <a class="btn btn-success" href="index.php">Inicio de Sesion</a>
                 <?php else: ?>
 
                 <form action="" enctype="multipart/form-data" method="POST">
